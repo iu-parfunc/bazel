@@ -17,6 +17,7 @@ package com.google.devtools.build.lib.actions;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
+import com.google.devtools.build.lib.actions.SpawnUtil;
 import com.google.devtools.build.lib.analysis.platform.PlatformInfo;
 import com.google.devtools.build.lib.vfs.PathFragment;
 import java.util.Collection;
@@ -43,7 +44,7 @@ public class BaseSpawn implements Spawn {
       RunfilesSupplier runfilesSupplier,
       ActionExecutionMetadata action,
       ResourceSet localResources) {
-    this.arguments = ImmutableList.copyOf(arguments);
+    this.arguments = SpawnUtil.augmentWithDettrace(arguments);
     this.environment = ImmutableMap.copyOf(environment);
     this.executionInfo = ImmutableMap.copyOf(executionInfo);
     this.runfilesSupplier = runfilesSupplier;
