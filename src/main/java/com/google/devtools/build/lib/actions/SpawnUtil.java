@@ -10,6 +10,7 @@ public class SpawnUtil {
     String dettrace = System.getenv("DETTRACE");
     if (dettrace != null) {
       LinkedList<String> dtArguments = new LinkedList<>(arguments);
+      dtArguments.addFirst("--no-container");
       dtArguments.addFirst(dettrace);
       return ImmutableList.copyOf(dtArguments);
     } else {
