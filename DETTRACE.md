@@ -46,9 +46,10 @@ Here is a list of large-ish projects that I have successfully managed to build
 using Bazel + `dettrace`. Most of these projects were taken from
 https://github.com/bazelbuild/bazel/wiki/Bazel-Users#open-source-projects-using-bazel:
 
-1. `abseil-cpp`: https://github.com/abseil/abseil-cpp
-2. `roughtime`: https://roughtime.googlesource.com/roughtime
-3. `served`: https://github.com/meltwater/served
+#. `abseil-cpp`: https://github.com/abseil/abseil-cpp
+#. `incubator-brpc`: https://github.com/apache/incubator-brpc
+#. `roughtime`: https://roughtime.googlesource.com/roughtime
+#. `served`: https://github.com/meltwater/served
 
 # Things that are nondeterministic
 
