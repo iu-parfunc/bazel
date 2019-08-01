@@ -1,0 +1,41 @@
+# Using Bazel + dettrace
+
+1. First, build Bazel from this repo. One of the following methods should suffice:
+
+   * Nix
+
+   ```
+   $ nix-shell
+   $ make build
+   ```
+
+   * Docker
+
+   ```
+   make docker
+   ```
+
+   * As a third option, you can try just running `make build`. You will need
+     JDK 8 installed, possibly other things.
+
+2. Find the locally built `bazel` binary. It's usually located somewhere like
+   `/path/to/bazel/repo/bazel-bin/src/bazel`. For the remainder of this
+   document, I'm just going to refer to this binary as `bazel`.
+
+3. Ensure that the Bazel server is not currently running. If it is, you can
+   stop it with the following command:
+
+   ```
+   $ bazel clean --expunge
+   ```
+
+4. Start the Bazel server, setting the `DETTRACE` environment variable to the
+   location of `dettrace` on your machine. For example:
+
+   ```
+   $ DETTRACE=/path/to/dettrace bazel info
+   ```
+
+5. Run `bazel` as you normally would! To verify that it is actually using
+   `dettrace`, you can pass the `--subcommands` flag to `bazel build` to
+   see the individually subprocesses being wrapped by `dettrace`.
