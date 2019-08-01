@@ -49,3 +49,26 @@ https://github.com/bazelbuild/bazel/wiki/Bazel-Users#open-source-projects-using-
 1. `abseil-cpp`: https://github.com/abseil/abseil-cpp
 2. `roughtime`: https://roughtime.googlesource.com/roughtime
 3. `served`: https://github.com/meltwater/served
+
+# Things that are nondeterministic
+
+The following Bazel builds are known to be nondeterministic:
+
+1. `govisor` (https://github.com/google/gvisor/tree/0a246fab80581351309cdfe39ffeeffa00f811b1):
+
+   ```
+   hashdeep: Audit failed
+      Input files examined: 0
+     Known files expecting: 0
+             Files matched: 6863
+   Files partially matched: 0
+               Files moved: 0
+           New files found: 15
+     Known files not found: 15
+   ```
+
+   Unfortunately, Bazel + `dettrace` gets stuck when trying to build this:
+
+   ```
+   [232 / 787] GoToolchainBinary external/go_sdk/builder [for host]; 12s linux-sandbox
+   ```
