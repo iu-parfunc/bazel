@@ -39,3 +39,13 @@
 5. Run `bazel` as you normally would! To verify that it is actually using
    `dettrace`, you can pass the `--subcommands` flag to `bazel build` to
    see the individually subprocesses being wrapped by `dettrace`.
+
+# Things built
+
+Here is a list of large-ish projects that I have successfully managed to build
+using Bazel + `dettrace`. Most of these projects were taken from
+https://github.com/bazelbuild/bazel/wiki/Bazel-Users#open-source-projects-using-bazel:
+
+1. `abseil-cpp`: https://github.com/abseil/abseil-cpp
+2. `roughtime`: https://roughtime.googlesource.com/roughtime
+3. `served`: https://github.com/meltwater/served
