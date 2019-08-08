@@ -10,6 +10,10 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+- clean: true
+  fetchDepth: 1
+  submodules: recursive
+  
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
