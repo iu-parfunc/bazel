@@ -16,5 +16,7 @@ steps:
   submodules: recursive
 
 - script: |
+    curl https://nixos.org/nix/install | sh
+    . /home/vsts/.nix-profile/etc/profile.d/nix.sh
     nix-shell --run 'make build'
   displayName: 'Build Bazel'
