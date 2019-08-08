@@ -10,7 +10,8 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- clean: true
+- checkout: self
+  clean: true
   fetchDepth: 1
   submodules: recursive
   
