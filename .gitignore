@@ -22,5 +22,5 @@
 
 # dettrace-specific things
 /dettrace
-/cloudseal_alpha_pkg_01665.tbz
+/cloudseal_alpha_pkg_*.tbz
 /cloudseal-alpha
