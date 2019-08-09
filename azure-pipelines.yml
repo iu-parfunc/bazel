@@ -22,8 +22,8 @@ steps:
   displayName: 'Debugging information'
 
 - script: |
-    apt-get update -y
-    apt-get install -y hashdeep
+    sudo apt-get update -y
+    sudo apt-get install -y hashdeep
   displayName: 'Install hashdeep'
 
 - script: |
@@ -39,6 +39,6 @@ steps:
     DETTRACE=${PWD}/dettrace bazel info
   displayName: 'Build Bazel and start the Bazel server'
 
-# - script: |
-#     FDSAF
-#   displayName: 'Run Bazel + dettrace on example projects'
+- script: |
+    ( cd tests; ./run-tests.sh )
+  displayName: 'Run Bazel + dettrace on example projects'
