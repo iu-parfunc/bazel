@@ -1,0 +1,3 @@
+[submodule "dettrace"]
+	path = dettrace
+	url = git@github.com:upenn-acg/dettrace
