@@ -28,17 +28,18 @@ steps:
 
 - script: |
     OTHER_DOCKER_ARGS="-v${PWD}:/host-volume" DOCKER_RUN_COMMAND="cp bin/dettrace-static /host-volume/dettrace" make -C detTrace run-docker-non-interactive
-    ./dettrace --help
+    DETTRACE=${PWD}/dettrace
+    ${DETTRACE} --help
   displayName: 'Build detTrace'
 
 - script: |
     curl https://nixos.org/nix/install | sh
     . /home/vsts/.nix-profile/etc/profile.d/nix.sh
     nix-shell --run 'make build'
-    export PATH=${PWD}/bazel-bin/src:${PATH}
-    DETTRACE=${PWD}/dettrace bazel info
+    export BAZEL=${PWD}/bazel-bin/src/bazel
+    ${BAZEL} info
   displayName: 'Build Bazel and start the Bazel server'
 
 - script: |
-    ( cd tests; ./run-tests.sh )
+    ( cd tests; ./run-tests.sh ${DETTRACE} ${BAZEL} )
   displayName: 'Run Bazel + dettrace on example projects'
