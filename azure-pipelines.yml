@@ -16,17 +16,20 @@ steps:
   persistCredentials: true
 
 - script: |
+    pwd
     lsb_release -a
     uname -a
     stat /dev/null
   displayName: 'Debugging information'
 
 - script: |
-    ( cd detTrace && make docker )
+    OTHER_DOCKER_ARGS="-v${PWD}:/host-volume" DOCKER_RUN_COMMAND="cp bin/dettrace-static /host-volume/dettrace" make -C detTrace run-docker
+    dettrace --help
   displayName: 'Build detTrace'
 
 - script: |
     curl https://nixos.org/nix/install | sh
     . /home/vsts/.nix-profile/etc/profile.d/nix.sh
     nix-shell --run 'make build'
-  displayName: 'Build Bazel'
+    DETTRACE=dettrace bazel info
+  displayName: 'Build Bazel and start the Bazel server'
