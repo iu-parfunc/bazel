@@ -22,6 +22,7 @@ steps:
     pwd
     lsb_release -a
     uname -a
+    cat /proc/cpuinfo
   displayName: 'Debugging information'
 
 - script: |
