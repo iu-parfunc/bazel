@@ -17,20 +17,25 @@ steps:
 
 - script: |
     pwd
-    hashdeep -h
     lsb_release -a
     uname -a
   displayName: 'Debugging information'
 
 - script: |
+    apt-get update -y
+    apt-get install -y hashdeep
+  displayName: 'Install hashdeep'
+
+- script: |
     OTHER_DOCKER_ARGS="-v${PWD}:/host-volume" DOCKER_RUN_COMMAND="cp bin/dettrace-static /host-volume/dettrace" make -C detTrace run-docker-non-interactive
-    dettrace --help
+    ./dettrace --help
   displayName: 'Build detTrace'
 
 - script: |
     curl https://nixos.org/nix/install | sh
     . /home/vsts/.nix-profile/etc/profile.d/nix.sh
     nix-shell --run 'make build'
+    export PATH=${PWD}/bazel-bin/src:${PATH}
     DETTRACE=${PWD}/dettrace bazel info
   displayName: 'Build Bazel and start the Bazel server'
 
