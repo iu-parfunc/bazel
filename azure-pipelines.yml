@@ -2,7 +2,7 @@ trigger:
 - dettrace
 
 variables:
-  CLOUDSEAL_TARBALL: cloudseal_alpha_pkg_01665.tbz
+  CLOUDSEAL_TARBALL: cloudseal_alpha_pkg_01667.tbz
 
 pool:
   vmImage: 'ubuntu-latest'
