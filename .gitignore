@@ -19,3 +19,6 @@
 # Ignore jekyll build output.
 /production
 /.sass-cache
+
+# dettrace-specific things
+/dettrace
