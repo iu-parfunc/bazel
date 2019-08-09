@@ -1,4 +1,4 @@
-FROM l.gcr.io/google/bazel:0.25.2
+FROM l.gcr.io/google/bazel:0.22.0
 
 RUN apt-get update -y && \
     apt-get install -y make
