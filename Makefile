@@ -1,4 +1,4 @@
-DOCKER_NAME=bazel-det
+DOCKER_NAME=detbazel
 DOCKER_TAG=0.22-1
 
 build:
@@ -8,4 +8,4 @@ docker:
 	docker build -t ${DOCKER_NAME}:${DOCKER_TAG} .
 
 run-docker: docker
-	docker run --rm -it ${DOCKER_NAME}:${DOCKER_TAG}
+	docker run --rm -it --privileged --userns=host --cap-add=SYS_ADMIN ${DOCKER_NAME}:${DOCKER_TAG}

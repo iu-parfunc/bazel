@@ -1,4 +1,4 @@
-# Using Bazel + dettrace
+# Using Bazel + a determinism sandbox
 
 1. First, build Bazel from this repo. One of the following methods should suffice:
 
@@ -56,7 +56,8 @@ bazel (say, detbazel) and includes an `/examples` directory. Here's
 how to run the `abseil-cpp` tests and verify that all the build
 outputs are deterministic.
 
-First, run the tests and store the hashes of the outputs:
+First, after you build the container, run it with
+`docker run --rm -it --privileged --userns=host --cap-add=SYS_ADMIN`.  This provides external permissions that are required for running our prototype sandbox.  Then run the tests:
 
 ```
 $ cd /examples/abseil-cpp
@@ -64,7 +65,7 @@ $ bazel test --subcommands //absl/...
 $ hashdeep -r bazel-bin/ > hashes.txt
 ```
 
-Next, perform a second build, and then audit the results against the first:
+Next, perform a second build, and audit the results against the first:
 
 ```
 $ bazel clean --expunge
@@ -79,7 +80,7 @@ Files partially matched: 0
 ```
 
 Running with a deterministic sandbox enabled should ensure that this
-audit always passes.  If not, please report this as a bug.
+audit always passes.  If not, please report the problem as a bug.
 
 
 # Bazel builds that exhibit nondeterminism (when run without a sandbox)
