@@ -1,7 +1,7 @@
 #!/bin/bash
 set +x
 
-DETTRACE=$1
+DETCMD=$1
 BAZEL=$2
 
 TEST_DIR=`pwd`
@@ -9,7 +9,7 @@ TEST_DIR=`pwd`
 run_test() {
   DIR=$1
   TARGET=$2
-  ( cd ${DIR}; ${TEST_DIR}/test-determinism.sh ${DETTRACE} ${BAZEL} ${TARGET} )
+  ( cd ${DIR}; ${TEST_DIR}/test-determinism.sh ${DETCMD} ${BAZEL} ${TARGET} )
 }
 
 run_test "nondet-genrule" "//main:nondet-genrule"
