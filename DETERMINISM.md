@@ -51,10 +51,13 @@ https://github.com/bazelbuild/bazel/wiki/Bazel-Users#open-source-projects-using-
 3. `roughtime`: https://roughtime.googlesource.com/roughtime
 4. `served`: https://github.com/meltwater/served
 
+# Testing determinism by hand
+
 The Dockerfile within this repository builds the modified version of
 bazel (say, detbazel) and includes an `/examples` directory. Here's
-how to run the `abseil-cpp` tests and verify that all the build
-outputs are deterministic.
+how to run the some tests and verify that all the build outputs are
+deterministic.  We'll use the included `abseil-cpp` package from the
+examples.
 
 First, after you build the container, run it with
 `docker run --rm -it --privileged --userns=host --cap-add=SYS_ADMIN`.  This provides external permissions that are required for running our prototype sandbox.  Then run the tests:
