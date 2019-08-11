@@ -29,11 +29,11 @@
    $ bazel clean --expunge
    ```
 
-4. Start the Bazel server, setting the `DETTRACE` environment variable to the
+4. Start the Bazel server, setting the `DETCMD` environment variable to the
    location of the determism-sandbox on your machine. For example:
 
    ```
-   $ DETTRACE=/path/to/cloudseal bazel info
+   $ DETCMD=/path/to/cloudseal bazel info
    ```
 
 5. Run `bazel` as you normally would! To verify that it is actually using

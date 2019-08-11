@@ -16,7 +16,7 @@ RUN cd /tmp && \
     tar -xf cloudseal_alpha_pkg_01667.tbz -C /usr/cloudseal-alpha/ && \
     ln -s /usr/cloudseal-alpha/bin/cloudseal /usr/bin/
 
-ENV DETTRACE /usr/bin/cloudseal
+ENV DETCMD /usr/bin/cloudseal
 COPY --from=0 /src/bazel-bin/src/bazel /usr/bin/bazel
 RUN mkdir /examples
 RUN bazel version
