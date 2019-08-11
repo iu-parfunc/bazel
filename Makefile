@@ -1,5 +1,5 @@
 DOCKER_NAME=bazel-det
-DOCKER_TAG=0.22-1
+DOCKER_TAG=0.25-1
 
 build:
 	bazel build //src:bazel
