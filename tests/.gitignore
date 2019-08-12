@@ -53,6 +53,8 @@ dkms.conf
 
 # Bazel
 bazel-*
+/*.tar.gz
+/abseil-cpp
 
 # test-determinism script
 out.first
