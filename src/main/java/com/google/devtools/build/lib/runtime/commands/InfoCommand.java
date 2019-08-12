@@ -182,6 +182,13 @@ public class InfoCommand implements BlazeCommand {
           return BlazeCommandResult.exitCode(ExitCode.ANALYSIS_FAILURE);
         }
       } else { // print them all
+        String dettrace = System.getenv("DETCMD");
+        if (dettrace != null && ! dettrace.isEmpty() ) {
+          outErr.printErrLn("DETCMD is set to: " + dettrace);
+        } else {
+          outErr.printErrLn("DETCMD is not set.");
+        }
+
         configurationSupplier.get();  // We'll need this later anyway
         for (InfoItem infoItem : items.values()) {
           if (infoItem.isHidden()) {
