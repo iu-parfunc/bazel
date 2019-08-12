@@ -51,10 +51,18 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-# Bazel
+###########
+## Bazel ##
+###########
+
+# Build output
 bazel-*
+
+# Test cases
 /*.tar.gz
 /abseil-cpp
+/incubator-brpc
+/served
 
 # test-determinism script
 out.first

@@ -14,9 +14,9 @@ run_test() {
   ( cd ${DIR}; ${TEST_DIR}/test-determinism.sh ${DETCMD} ${BAZEL} ${TARGET} )
 }
 
-# Try Bazel builds taken from the wild. We download them to avoid having to
-# check them in as submodules.
-run_external_test() {
+# Try Bazel builds taken from GitHub projects.
+# We download them to avoid having to check them in as submodules.
+run_github_test() {
   GITHUB_USER=$1
   GITHUB_REPO=$2
   GITHUB_SHA_ABBREV=$3
@@ -41,4 +41,6 @@ run_external_test() {
 }
 
 run_test "nondet-genrule" "//main:nondet-genrule"
-run_external_test "abseil" "abseil-cpp" "52e88ee" "//absl/..."
+run_github_test "abseil" "abseil-cpp" "52e88ee" "//absl/..."
+run_github_test "apache" "incubator-brpc" "9f9f857" "//..."
+run_github_test "meltwater" "served" "f035363" ":served"
