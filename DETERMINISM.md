@@ -48,8 +48,9 @@ https://github.com/bazelbuild/bazel/wiki/Bazel-Users#open-source-projects-using-
 
 1. `abseil-cpp`: https://github.com/abseil/abseil-cpp
 2. `incubator-brpc`: https://github.com/apache/incubator-brpc
-3. `roughtime`: https://roughtime.googlesource.com/roughtime
-4. `served`: https://github.com/meltwater/served
+3. `jsonnet`: https://github.com/google/jsonnet
+4. `roughtime`: https://roughtime.googlesource.com/roughtime
+5. `served`: https://github.com/meltwater/served
 
 The Dockerfile within this repository builds the modified version of
 bazel (say, detbazel) and includes an `/examples` directory. Here's

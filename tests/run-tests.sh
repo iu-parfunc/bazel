@@ -43,4 +43,5 @@ run_github_test() {
 run_test "nondet-genrule" "//main:nondet-genrule"
 run_github_test "abseil" "abseil-cpp" "52e88ee" "//absl/..."
 run_github_test "apache" "incubator-brpc" "9f9f857" "//..."
+run_github_test "google" "jsonnet" "552d8ec" "//cmd:all"
 run_github_test "meltwater" "served" "f035363" ":served"
