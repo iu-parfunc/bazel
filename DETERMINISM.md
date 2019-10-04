@@ -83,6 +83,41 @@ Files partially matched: 0
 Running with a deterministic sandbox enabled should ensure that this
 audit always passes.  If not, please report the problem as a bug.
 
+# Regression tests
+
+We have compiled a collection of test cases to stress-test Bazel + `cloudseal`
+under the `tests/` directory. These test cases are a combination of:
+
+1. Hand-crafted tests designed to test particular facets of irreproducibility
+   in builds. (See, for instance, `tests/nondet-genrule`).
+2. Pinned versions of "in-the-wild" projects that use Bazel. We test these
+   against Bazel + `cloudseal` to catch potential regressions.
+
+To execute all tests, go the `tests/` directory and run the following command:
+
+```
+$ ./run-tests.sh ${DETCMD} ${BAZEL}
+```
+
+Where:
+
+* `${DETCMD}` is the path to the `cloudseal` executable
+* `${BAZEL}` is the path to the `cloudseal`-aware Bazel executable
+
+If you wish to run an individual test, navigate to its directory (e.g.,
+`tests/nondet-genrule`) and run the following command:
+
+```
+$ ../test-determinism.sh ${DETCMD} ${BAZEL} ${TARGET}
+```
+
+Where:
+
+* `${DETCMD}` is the path to the `cloudseal` executable
+* `${BAZEL}` is the path to the `cloudseal`-aware Bazel executable
+* `${TARGET}` is the `bazel build` target to run (e.g., `//...`). Most test
+  cases expect a specific target, so refer to `tests/run-tests.sh` to see
+  which target to use for each test case.
 
 # Bazel builds that exhibit nondeterminism (when run without a sandbox)
 
