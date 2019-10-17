@@ -2,7 +2,7 @@ trigger:
 - dettrace
 
 variables:
-  CLOUDSEAL_TARBALL: cloudseal_alpha_pkg_01667.tbz
+  BAZEL_BUILD_ARGS:
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -15,10 +15,11 @@ steps:
     sshKeySecureFile: id_rsa_azure_pipelines
 
 - checkout: self
-  submodules: true
+  submodules: recursive
   persistCredentials: true
 
 - script: |
+    echo ${BAZEL_BUILD_ARGS}
     pwd
     lsb_release -a
     uname -a
@@ -31,27 +32,24 @@ steps:
   displayName: 'Install hashdeep'
 
 - script: |
-    wget https://www.cloudseal.io/s/${CLOUDSEAL_TARBALL}
-    mkdir ${PWD}/cloudseal-alpha
-    tar -xvf ${PWD}/${CLOUDSEAL_TARBALL} -C cloudseal-alpha/
-    # Set the env vars
-    export DETCMD=${PWD}/cloudseal-alpha/bin/dettrace
-    ln -s ${PWD}/cloudseal-alpha/bin/cloudseal ${DETCMD}
-  displayName: 'Download dettrace binary'
+    cd detTrace/
+    # Cargo-culted from detTrace's Makefile
+    PKGNAME=dettrace_`cat VERSION`-0
+    OTHER_DOCKER_ARGS="-v${PWD}:/host-volume" DOCKER_RUN_COMMAND="/bin/bash -c 'make deb && cp ${PKGNAME}.deb /host-volume/${PKGNAME}.deb'" make run-docker-non-interactive
+    sudo dpkg -i ${PWD}/${PKGNAME}.deb
+    cd ..
+    dettrace --help
+  displayName: 'Build and install dettrace'
 
 - script: |
     curl https://nixos.org/nix/install | sh
     . /home/vsts/.nix-profile/etc/profile.d/nix.sh
     nix-shell --run 'make build'
-    # Set the env vars
-    export DETCMD=${PWD}/cloudseal-alpha/bin/dettrace
     export BAZEL=${PWD}/bazel-bin/src/bazel
-    DETCMD=${DETCMD} ${BAZEL} info
+    DETCMD=dettrace ${BAZEL} info
   displayName: 'Build Bazel and start the Bazel server'
 
 - script: |
-    # Set the env vars
-    export DETCMD=${PWD}/cloudseal-alpha/bin/dettrace
     export BAZEL=${PWD}/bazel-bin/src/bazel
-    ( cd tests; ./run-tests.sh ${DETCMD} ${BAZEL} )
+    ( cd tests; ./run-tests.sh dettrace ${BAZEL} ${BAZEL_BUILD_ARGS} )
   displayName: 'Run Bazel + dettrace on example projects'
