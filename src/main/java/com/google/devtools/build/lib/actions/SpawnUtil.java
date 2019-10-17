@@ -11,7 +11,7 @@ public class SpawnUtil {
     if (dettrace != null && ! dettrace.isEmpty() ) {
       // System.err.println("DET: Environment variable DETCMD set, using it: "+dettrace);
       LinkedList<String> dtArguments = new LinkedList<>(arguments);
-      dtArguments.addFirst("--no-container");
+      dtArguments.addFirst("--");
       dtArguments.addFirst(dettrace);
       return ImmutableList.copyOf(dtArguments);
     } else {
