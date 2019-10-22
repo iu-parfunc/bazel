@@ -2,13 +2,14 @@
 set -xe
 
 DETCMD=$1
-BAZEL=$2
-TARGET=$3
-BAZEL_BUILD_ARGS=$4
+DETCMD_ARGS=$2
+BAZEL=$3
+TARGET=$4
+BAZEL_BUILD_ARGS=$5
 
 for suffix in {first,second}; do
-  DETCMD=${DETCMD}   ${BAZEL} clean && \
-    DETCMD=${DETCMD} ${BAZEL} build ${TARGET} ${BAZEL_BUILD_ARGS} && \
+  DETCMD=${DETCMD}   DETCMD_ARGS=${DETCMD_ARGS} ${BAZEL} clean && \
+    DETCMD=${DETCMD} DETCMD_ARGS=${DETCMD_ARGS} ${BAZEL} build ${TARGET} ${BAZEL_BUILD_ARGS} && \
     hashdeep -lr bazel-bin/ > out.${suffix}
 done
 

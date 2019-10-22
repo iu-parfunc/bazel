@@ -2,6 +2,7 @@ trigger:
 - dettrace
 
 variables:
+  DETCMD_ARGS:
   BAZEL_BUILD_ARGS:
 
 pool:
@@ -51,5 +52,5 @@ steps:
 
 - script: |
     export BAZEL=${PWD}/bazel-bin/src/bazel
-    ( cd tests; ./run-tests.sh dettrace ${BAZEL} ${BAZEL_BUILD_ARGS} )
+    ( cd tests; ./run-tests.sh dettrace ${DETCMD_ARGS} ${BAZEL} ${BAZEL_BUILD_ARGS} )
   displayName: 'Run Bazel + dettrace on example projects'

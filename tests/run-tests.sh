@@ -2,8 +2,9 @@
 set -xe
 
 DETCMD=$1
-BAZEL=$2
-BAZEL_BUILD_ARGS=$3
+DETCMD_ARGS=$2
+BAZEL=$3
+BAZEL_BUILD_ARGS=$4
 
 TEST_DIR=`pwd`
 
@@ -12,7 +13,7 @@ run_test() {
   TARGET=$2
 
   echo "Now running ${DIR} with \`bazel build ${TARGET}\`..."
-  ( cd ${DIR}; ${TEST_DIR}/test-determinism.sh ${DETCMD} ${BAZEL} ${TARGET} ${BAZEL_BUILD_ARGS} )
+  ( cd ${DIR}; ${TEST_DIR}/test-determinism.sh ${DETCMD} ${DETCMD_ARGS} ${BAZEL} ${TARGET} ${BAZEL_BUILD_ARGS} )
 }
 
 # Try Bazel builds taken from GitHub projects.
