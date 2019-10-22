@@ -96,28 +96,32 @@ under the `tests/` directory. These test cases are a combination of:
 To execute all tests, go the `tests/` directory and run the following command:
 
 ```
-$ ./run-tests.sh ${DETCMD} ${BAZEL}
+$ ./run-tests.sh ${DETCMD} ${DETCMD_ARGS} ${BAZEL} ${BAZEL_BUILD_ARGS}
 ```
 
 Where:
 
 * `${DETCMD}` is the path to the `cloudseal` executable
+* `${DETCMD_ARGS}` are the command-line flags to pass to `cloudseal`
 * `${BAZEL}` is the path to the `cloudseal`-aware Bazel executable
+* `${BAZEL_BUILD_ARGS}` are the command-line arguments to pass to Bazel
 
 If you wish to run an individual test, navigate to its directory (e.g.,
 `tests/nondet-genrule`) and run the following command:
 
 ```
-$ ../test-determinism.sh ${DETCMD} ${BAZEL} ${TARGET}
+$ ../test-determinism.sh ${DETCMD} ${DETCMD_ARGS} ${BAZEL} ${TARGET} ${BAZEL_BUILD_ARGS}
 ```
 
 Where:
 
 * `${DETCMD}` is the path to the `cloudseal` executable
+* `${DETCMD_ARGS}` are the command-line flags to pass to `cloudseal`
 * `${BAZEL}` is the path to the `cloudseal`-aware Bazel executable
 * `${TARGET}` is the `bazel build` target to run (e.g., `//...`). Most test
   cases expect a specific target, so refer to `tests/run-tests.sh` to see
   which target to use for each test case.
+* `${BAZEL_BUILD_ARGS}` are the command-line arguments to pass to Bazel
 
 # Bazel builds that exhibit nondeterminism (when run without a sandbox)
 
