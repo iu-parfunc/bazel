@@ -125,7 +125,58 @@ Where:
 
 # Bazel builds that exhibit nondeterminism (when run without a sandbox)
 
-The following Bazel builds are known to be nondeterministic:
+## Things `cloudseal` can determinize
+
+The following Bazel builds are known to be nondeterministic, but `cloudseal` is
+able to determinize the builds.
+
+### Timestamp-related issues.
+
+Various builds embed timestamps directly into compressed files:
+
+1. `rules_rust` (https://github.com/bazelbuild/rules_rust/tree/29acd8fe69dd20d9a306b3f12cd1e7393682e239):
+
+   ```
+   $ ../bazel/tests/test-determinism.sh "" "" bazel "..." ""
+
+   .../io_bazel_rules_rust/bazel-out/k8-fastbuild/bin/external/raze__bindgen__0_40_0/bindgen_out_dir_outputs.tar.gz: No match
+   .../io_bazel_rules_rust/bazel-out/k8-fastbuild/bin/external/raze__bindgen__0_40_0/bindgen_out_dir_outputs.tar.gz: Known file not used
+   hashdeep: Audit failed
+      Input files examined: 0
+     Known files expecting: 0
+             Files matched: 856
+   Files partially matched: 0
+               Files moved: 0
+           New files found: 1
+     Known files not found: 1
+   ```
+
+   The reason this `tar.gz` file has different timestamps embedded in each run
+   is due to `rules_rust`
+   [using a `genrule` that directly invokes `tar`](https://github.com/bazelbuild/rules_rust/blob/1ced2c20d7db2bda3e473864bfdc085095b16bff/bindgen/raze/remote/bindgen-0.40.0.BUILD#L67)
+   instead of using the `pkg_tar` rule, which makes an effort to scrub timestamps.
+
+2. `rules_python` (https://github.com/bazelbuild/rules_python/tree/230f6d15b4ab23cd3a46c54023c9e5fb3e1e3542)
+
+   ```
+   $ ../bazel/tests/test-determinism.sh "" "" bazel "..." ""
+
+   hashdeep: Audit failed
+      Input files examined: 0
+     Known files expecting: 0
+             Files matched: 20
+   Files partially matched: 0
+               Files moved: 0
+           New files found: 12
+     Known files not found: 12
+   ```
+
+   All 12 of the mismatches files are Python `.whl` files, which have embedded timestamps.
+
+## Things `cloudseal` cannot handle
+
+The following Bazel builds are known to be nondeterministic, but `cloudseal` is
+unable is deal with:
 
 1. `govisor` (https://github.com/google/gvisor/tree/0a246fab80581351309cdfe39ffeeffa00f811b1):
 
@@ -140,8 +191,4 @@ The following Bazel builds are known to be nondeterministic:
      Known files not found: 15
    ```
 
-   Unfortunately, Bazel + `cloudseal` gets stuck when trying to build this:
-
-   ```
-   [232 / 787] GoToolchainBinary external/go_sdk/builder [for host]; 12s linux-sandbox
-   ```
+   Unfortunately, Bazel + `cloudseal` gets stuck when trying to build `external/go_sdk/builder`.
