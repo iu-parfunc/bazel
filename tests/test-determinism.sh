@@ -13,6 +13,9 @@ for suffix in {first,second}; do
   DETCMD=${DETCMD}   DETCMD_ARGS=${DETCMD_ARGS} ${BAZEL} clean && \
     DETCMD=${DETCMD} DETCMD_ARGS=${DETCMD_ARGS} ${BAZEL} build ${TARGET} ${BAZEL_BUILD_ARGS} && \
     hashdeep -lr ${BAZEL_BIN_DIR} > out.${suffix}
+  if [[ "${suffix}" == "first" ]]; then
+    sleep 2 # This helps flush out timestamp-related bugs on quick-running builds
+  fi
 done
 
 if [ -z "$(ls -A ${BAZEL_BIN_DIR})" ]; then
