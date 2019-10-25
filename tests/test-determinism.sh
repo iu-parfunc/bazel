@@ -15,4 +15,8 @@ for suffix in {first,second}; do
     hashdeep -lr ${BAZEL_BIN_DIR} > out.${suffix}
 done
 
-hashdeep -ravvl -k out.first ${BAZEL_BIN_DIR}
+if [ -z "$(ls -A ${BAZEL_BIN_DIR})" ]; then
+  echo "No build output detected, skipping hashdeep"
+else
+  hashdeep -ravvl -k out.first ${BAZEL_BIN_DIR}
+fi
